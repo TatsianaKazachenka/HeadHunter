@@ -13,9 +13,9 @@ public class BaseAdapter implements IPageConstants {
     public String get(String url){
         return
                 given()
-                        .header("Content-Type", "application/json")
+                        .header(CONTENT_TYPE, APPLICATION_JSON)
                 .when()
-                        .get(URL + url)
+                        .get(BASE_API_HH_URL + url)
                 .then()
                         .log().all()
                         .extract().body().asString();
@@ -24,10 +24,10 @@ public class BaseAdapter implements IPageConstants {
     public Response post(String url, String body){
         return
                 given()
-                        .header("Content-Type", "application/json")
+                        .header(CONTENT_TYPE, APPLICATION_JSON)
                         .body(body)
                 .when()
-                        .post(URL + url)
+                        .post(BASE_API_HH_URL + url)
                 .then()
                         .log().all()
                         .extract().response();
@@ -35,9 +35,9 @@ public class BaseAdapter implements IPageConstants {
 
     public void delete(String url){
         given()
-                .header("Content-Type", "application/json")
+                .header(CONTENT_TYPE, APPLICATION_JSON)
         .when()
-                .delete(URL + url)
+                .delete(BASE_API_HH_URL + url)
         .then()
                 .log().all();
     }

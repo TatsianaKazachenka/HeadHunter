@@ -8,11 +8,14 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
+import pages.LoginPage;
 
 import java.util.concurrent.TimeUnit;
 
 public class BaseTest implements ITestConstants {
     WebDriver driver;
+
+    LoginPage loginPage;
 
     @BeforeMethod
     public void initTest() {
@@ -32,5 +35,6 @@ public class BaseTest implements ITestConstants {
     }
 
     private void initPages() {
+        loginPage = new LoginPage(driver);
     }
 }
