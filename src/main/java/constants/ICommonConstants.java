@@ -1,0 +1,17 @@
+package constants;
+
+public interface ICommonConstants {
+    //URLs
+    String BASE_HH_URL = "https://hh.ru/";
+    String SEARCH_VACANCY_URL = "search/vacancy";
+    String VACANCY_URL = "vacancy/";
+    String ADVANCED_URL = "/advanced";
+    String EMPLOYERS_URL = "/employers_list";
+
+    //URLs API
+    String BASE_API_HH_URL = "https://api.hh.ru/";
+    String VACANCIES_API_URL = "vacancies";
+    String EMPLOYERS_API_URL = "employers";
+
+    String HEADER = "вакансий «%s»";
+}
