@@ -8,19 +8,32 @@ import java.util.Map;
 
 public class EmployerAdapter extends BaseAdapter{
 
-    public EmployersList getCountEmployersListWithOpenVacancies() {
-        Map<String, String> params = new HashMap<String, String>();
-        params.put("only_with_vacancies", "true");
+    public EmployersList getWithParams(Map<String, String> params){
         String body = getWithParams(EMPLOYERS_API_URL, params);
         EmployersList list = new Gson().fromJson(body, EmployersList.class);
         return list;
     }
 
-    public EmployersList getCountEmployersAdvancedSearch() {
+    public EmployersList getCountEmployersListWithOpenVacancies(String withVacancies) {
         Map<String, String> params = new HashMap<String, String>();
-        params.put("area", "1007");
-        String body = getWithParams(EMPLOYERS_API_URL, params);
-        EmployersList list = new Gson().fromJson(body, EmployersList.class);
+        params.put("only_with_vacancies", withVacancies);
+        EmployersList list = getWithParams(params);
+        return list;
+    }
+
+    public EmployersList getCountEmployersAdvancedSearch(String area) {
+        Map<String, String> params = new HashMap<String, String>();
+        params.put("area", area);
+        EmployersList list = getWithParams(params);;
+        return list;
+    }
+
+    public EmployersList getCountOpenVacancies(String search, String area,String withVacancies) {
+        Map<String, String> params = new HashMap<String, String>();
+        params.put("area", area);
+        params.put("text", search);
+        params.put("only_with_vacancies", withVacancies);
+        EmployersList list = getWithParams(params);;
         return list;
     }
 }

@@ -13,4 +13,5 @@ public interface ITestConstants {
     String SEARCH_PERIOD = "30";
     String SEARCH_PAGE = "20";
     String SEARCH_TEXT_EMPLOYER = "Design";
+    String SEARCH_WITH_VACANCIES = "only_with_vacancies";
 }
