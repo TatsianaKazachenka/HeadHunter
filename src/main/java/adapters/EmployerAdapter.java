@@ -1,14 +1,17 @@
 package adapters;
 
 import com.google.gson.Gson;
+import lombok.extern.log4j.Log4j2;
 import objects.*;
 
 import java.util.HashMap;
 import java.util.Map;
 
+@Log4j2
 public class EmployerAdapter extends BaseAdapter{
 
     public EmployersList getWithParams(Map<String, String> params){
+        log.info("Getting a list of employers with parameters");
         String body = getWithParams(EMPLOYERS_API_URL, params);
         return new Gson().fromJson(body, EmployersList.class);
     }
@@ -31,5 +34,11 @@ public class EmployerAdapter extends BaseAdapter{
         params.put("text", search);
         params.put("only_with_vacancies", withVacancies);
         return getWithParams(params);
+    }
+
+    public Employer getEmployer(String id) {
+        String body = get(String.format("%s/%s", EMPLOYERS_API_URL, id));
+        Employer list = new Gson().fromJson(body, Employer.class);
+        return list;
     }
 }

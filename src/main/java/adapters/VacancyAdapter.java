@@ -1,19 +1,25 @@
 package adapters;
 
 import com.google.gson.Gson;
+import lombok.extern.log4j.Log4j2;
 import objects.*;
 
 import java.util.HashMap;
 import java.util.Map;
 
+@Log4j2
 public class VacancyAdapter extends BaseAdapter{
+
+    public VacanciesList getWithParams(Map<String, String> params){
+        log.info("Getting a list of vacancies with parameters");
+        String body = getWithParams(VACANCIES_API_URL, params);
+        return new Gson().fromJson(body, VacanciesList.class);
+    }
 
     public VacanciesList getVacanciesListForTextSearch(String search) {
         Map<String, String> params = new HashMap<String, String>();
         params.put("text", search);
-        String body = getWithParams(VACANCIES_API_URL, params);
-        VacanciesList list = new Gson().fromJson(body, VacanciesList.class);
-        return list;
+        return getWithParams(params);
     }
 
     public VacanciesList getAdvancedVacanciesListSearch(String search, String area, String currency_code,
@@ -29,9 +35,7 @@ public class VacancyAdapter extends BaseAdapter{
         params.put("order_by", order_by);
         params.put("search_period", period);
         params.put("items_on_page", page);
-        String body = getWithParams(VACANCIES_API_URL, params);
-        VacanciesList list = new Gson().fromJson(body, VacanciesList.class);
-        return list;
+        return getWithParams(params);
     }
 
     public Vacancy getVacancy(String id) {

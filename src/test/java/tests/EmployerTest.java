@@ -15,24 +15,25 @@ public class EmployerTest extends BaseTest{
         int countEmployersAPI = list.getFound();
 
         employerPage.openPage();
-        employerPage.getCountEmployers();
+        employerPage.searchOnlyWithCloseVacancies();
         int countEmployersUI = employerPage.getCountEmployers();
         Assert.assertEquals(countEmployersAPI, countEmployersUI);
     }
 
     @Test
+    @Description("The number of companies after search")
     public void countEmployersAdvancedSearchTest() {
         EmployersList list = new EmployerAdapter().getCountEmployersAdvancedSearch(SEARCH_AREA);
         int countEmployersAPI = list.getFound();
 
         employerPage.openPage();
-        employerPage.getCountEmployers();
         employerPage.advancedSearchEmployers(SEARCH_COUNTRY, SEARCH_REGION, "", true);
         int countEmployersUI = employerPage.getCountEmployers();
         Assert.assertEquals(countEmployersAPI, countEmployersUI);
     }
 
     @Test
+    @Description("The number open vacancies with Employer")
     public void openVacanciesTest() {
         EmployersList listAPI = new EmployerAdapter().getCountOpenVacancies(SEARCH_TEXT_EMPLOYER, SEARCH_AREA,SEARCH_WITH_VACANCIES);
         int countEmployersAPI = listAPI.getFound();
@@ -54,5 +55,21 @@ public class EmployerTest extends BaseTest{
                 }
             }
         }
+    }
+
+    @Test
+    @Description("Checking Employer")
+    public void employerTest(){
+        employerPage.openPage();;
+        employerPage.advancedSearchEmployers(SEARCH_COUNTRY, SEARCH_REGION, SEARCH_TEXT_EMPLOYER, false);
+        String id = employerPage.getIdEmployer();
+
+        Employer listAPI = new EmployerAdapter().getEmployer(id);
+        Employer listUI = employerPage.fullingEmployer();
+
+        Assert.assertEquals(listAPI.getName(), listUI.getName());
+        Assert.assertEquals(listAPI.getArea().getName(), listUI.getArea().getName());
+        Assert.assertEquals(listAPI.getOpenVacancies(), listUI.getOpenVacancies());
+        Assert.assertEquals(listAPI.getSiteUrl().replace("https://", "").replace("http://", ""), listUI.getSiteUrl().replace("https://", "").replace("http://", ""));
     }
 }

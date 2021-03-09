@@ -14,4 +14,6 @@ public interface ICommonConstants {
     String EMPLOYERS_API_URL = "employers";
 
     String HEADER = "вакансий «%s»";
+    String EMPLOYERS_ACTIV_VACANCIES = " активные вакансии";
+    String EMPLOYERS_ACTIV_VACANCY = " активная вакансия";
 }

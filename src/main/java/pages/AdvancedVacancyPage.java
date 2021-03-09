@@ -1,5 +1,7 @@
 package pages;
 
+import io.qameta.allure.Step;
+import lombok.extern.log4j.Log4j2;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
@@ -7,10 +9,12 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import utils.AllureUtils;
 
 import java.util.List;
 
-public class AdvancedVacancyPage extends BasePage{
+@Log4j2
+public class AdvancedVacancyPage extends BasePage {
 
     @FindBy(xpath = "//*[@data-qa='vacancysearch__keywords-input']")
     WebElement inputSearch;
@@ -42,33 +46,48 @@ public class AdvancedVacancyPage extends BasePage{
         super(driver);
     }
 
+    @Step("Opening Advanced Search Page")
     public void openPage() {
-        openPage(String.format("%s%s", BASE_HH_URL, SEARCH_VACANCY_URL+ ADVANCED_URL));
+        openPage(String.format("%s%s%s", BASE_HH_URL, SEARCH_VACANCY_URL, ADVANCED_URL));
     }
 
-    public void fullingAdvancedSearch(String textSearch,String country, String region) throws InterruptedException {
-        inputSearch.sendKeys(textSearch);
-        scrolling(buttonSearchRegion);
-        for(WebElement item : selectedRegions){
-            item.click();
+    @Step("Filling out the advanced search form. Search string - {textSearch}, region to search - {region}")
+    public void fullingAdvancedSearch(String textSearch, String country, String region) throws InterruptedException {
+        log.info(String.format("Entering the phrase '%s' to search", textSearch));
+        try {
+            inputSearch.sendKeys(textSearch);
+            scrolling(buttonSearchRegion);
+            for (WebElement item : selectedRegions) {
+                item.click();
+            }
+            buttonSearchRegion.click();
+            WebDriverWait wait = new WebDriverWait(driver, 50);
+            log.info(String.format("Waiting for a window to appear"));
+            wait.until(ExpectedConditions.visibilityOf(modalRegion));
+            log.info(String.format("Country selection '%s'", country));
+            driver.findElement(By.xpath(String.format(BUTTON_SEARCH_COUNTRY, country))).click();
+            log.info(String.format("Region selection '%s'", region));
+            driver.findElement(By.xpath(String.format(ELEMENT_SEARCH_REGION, region))).click();
+            buttonSelectRegion.click();
+            log.info("Item selection no experience");
+            radioboxNoExperience.click();
+            scrolling(checkboxEmploymentFull);
+            log.info("Item selection full time");
+            checkboxEmploymentFull.click();
+            checkboxDayFull.click();
+            scrolling(radioboxSearchperiod30);
+            log.info("Item selection per month");
+            radioboxSearchperiod30.click();
+            log.info("Item selection 20 jobs per page");
+            radioboxItemPage20.click();
+            buttonSearchVacancy.click();
+        } catch (Exception ex) {
+            AllureUtils.takeScreenshot(driver);
         }
-        buttonSearchRegion.click();
-        WebDriverWait wait = new WebDriverWait(driver, 50);
-        wait.until(ExpectedConditions.visibilityOf(modalRegion));
-        driver.findElement(By.xpath(String.format(BUTTON_SEARCH_COUNTRY, country))).click();
-        driver.findElement(By.xpath(String.format(ELEMENT_SEARCH_REGION, region))).click();
-        buttonSelectRegion.click();
-        radioboxNoExperience.click();
-        scrolling(checkboxEmploymentFull);
-        checkboxEmploymentFull.click();
-        checkboxDayFull.click();
-        scrolling(radioboxSearchperiod30);
-        radioboxSearchperiod30.click();
-        radioboxItemPage20.click();
-        buttonSearchVacancy.click();
     }
 
-    public void scrolling(WebElement element) throws InterruptedException{
+    public void scrolling(WebElement element) throws InterruptedException {
+        log.info(String.format("Scrolling by element"));
         ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", element);
         Thread.sleep(500);
     }
