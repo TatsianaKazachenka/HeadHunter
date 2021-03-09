@@ -10,8 +10,7 @@ public class EmployerAdapter extends BaseAdapter{
 
     public EmployersList getWithParams(Map<String, String> params){
         String body = getWithParams(EMPLOYERS_API_URL, params);
-        EmployersList list = new Gson().fromJson(body, EmployersList.class);
-        return list;
+        return new Gson().fromJson(body, EmployersList.class);
     }
 
     public EmployersList getCountEmployersListWithOpenVacancies(String withVacancies) {
@@ -31,7 +30,6 @@ public class EmployerAdapter extends BaseAdapter{
         params.put("area", area);
         params.put("text", search);
         params.put("only_with_vacancies", withVacancies);
-        EmployersList list = getWithParams(params);
-        return list;
+        return getWithParams(params);
     }
 }
