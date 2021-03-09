@@ -17,15 +17,13 @@ public class EmployerAdapter extends BaseAdapter{
     public EmployersList getCountEmployersListWithOpenVacancies(String withVacancies) {
         Map<String, String> params = new HashMap<String, String>();
         params.put("only_with_vacancies", withVacancies);
-        EmployersList list = getWithParams(params);
-        return list;
+        return getWithParams(params);
     }
 
     public EmployersList getCountEmployersAdvancedSearch(String area) {
         Map<String, String> params = new HashMap<String, String>();
         params.put("area", area);
-        EmployersList list = getWithParams(params);;
-        return list;
+        return getWithParams(params);
     }
 
     public EmployersList getCountOpenVacancies(String search, String area,String withVacancies) {
@@ -33,7 +31,7 @@ public class EmployerAdapter extends BaseAdapter{
         params.put("area", area);
         params.put("text", search);
         params.put("only_with_vacancies", withVacancies);
-        EmployersList list = getWithParams(params);;
+        EmployersList list = getWithParams(params);
         return list;
     }
 }
