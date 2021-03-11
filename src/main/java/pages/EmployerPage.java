@@ -70,9 +70,10 @@ public class EmployerPage extends BasePage {
         return Integer.parseInt(count);
     }
 
-    @Step("Search for companies without vacancies")
-    public void searchOnlyWithCloseVacancies() {
+    @Step("Search for companies with vacancies")
+    public void searchEmployersWithoutOpenVacancies(String text) {
         try {
+            inputSearch.sendKeys(text);
             checkboxWithCloseVacancies.click();
             buttonSearchEmployers.click();
         } catch (Exception ex) {

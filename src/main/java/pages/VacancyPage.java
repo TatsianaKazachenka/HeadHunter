@@ -59,7 +59,7 @@ public class VacancyPage extends BasePage {
     public int getCountFoundVacancy(String search) {
         log.info("Getting the number of vacancies");
         String headerText = headerTextVacancy.getText();
-        headerText = headerText.replace(String.format(HEADER, search), "")
+        headerText = headerText.replaceAll(HEADER, "")
                 .replaceAll("\\s+", "");
         return Integer.parseInt(headerText);
     }

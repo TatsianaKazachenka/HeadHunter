@@ -9,13 +9,13 @@ import org.testng.annotations.Test;
 public class EmployerTest extends BaseTest {
 
     @Test
-    @Description("The number of companies with open vacancies")
-    public void countEmployersWithOpenVacanciesTest() {
-        EmployersList list = new EmployerAdapter().getCountEmployersListWithOpenVacancies(SEARCH_WITH_VACANCIES);
+    @Description("Search by text number of companies that have no open vacancies")
+    public void countEmployersWithoutOpenVacanciesTest() {
+        EmployersList list = new EmployerAdapter().getCountEmployersListWithoutOpenVacancies(SEARCH_TEXT_EMPLOYER);
         int countEmployersAPI = list.getFound();
 
         employerPage.openPage();
-        employerPage.searchOnlyWithCloseVacancies();
+        employerPage.searchEmployersWithoutOpenVacancies(SEARCH_TEXT_EMPLOYER);
         int countEmployersUI = employerPage.getCountEmployers();
         Assert.assertEquals(countEmployersAPI, countEmployersUI);
     }

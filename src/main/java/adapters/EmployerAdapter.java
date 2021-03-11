@@ -16,9 +16,9 @@ public class EmployerAdapter extends BaseAdapter{
         return new Gson().fromJson(body, EmployersList.class);
     }
 
-    public EmployersList getCountEmployersListWithOpenVacancies(String withVacancies) {
+    public EmployersList getCountEmployersListWithoutOpenVacancies(String search) {
         Map<String, String> params = new HashMap<String, String>();
-        params.put("only_with_vacancies", withVacancies);
+        params.put("text", search);
         return getWithParams(params);
     }
 
