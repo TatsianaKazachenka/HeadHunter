@@ -13,6 +13,7 @@ import utils.AllureUtils;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.NoSuchElementException;
 
 @Log4j2
 public class EmployerPage extends BasePage {
@@ -41,6 +42,12 @@ public class EmployerPage extends BasePage {
     WebElement countOpenVacancies;
     @FindBy(xpath = "//*[@data-qa='sidebar-text-color']//*[@data-qa='sidebar-company-site']")
     WebElement siteEmployer;
+    @FindBy(xpath = "//*[@data-qa = 'change-locale-EN']")
+    WebElement hrefSwitchLanguageToEn;
+    @FindBy(xpath = "//*[@data-qa = 'change-locale-RU']")
+    WebElement hrefSwitchLanguageToRu;
+    @FindBy(xpath = "//*[@data-qa = 'login']")
+    WebElement buttonLogin;
 
     public static final String BUTTON_SEARCH_COUNTRY = "//*[contains(text(),'%s')]/ancestor::*[contains(@class, 'bloko-tree-selector-content')]//*[contains(@data-qa, 'bloko-tree-selector-toogle-node')]";
     public static final String ELEMENT_SEARCH_REGION = "//*[contains(text(),'%s') and contains(@data-qa,'bloko-tree-selector-item-text')]";
@@ -69,6 +76,7 @@ public class EmployerPage extends BasePage {
             checkboxWithCloseVacancies.click();
             buttonSearchEmployers.click();
         } catch (Exception ex) {
+            log.info(ex.getMessage());
             AllureUtils.takeScreenshot(driver);
         }
     }
@@ -93,6 +101,7 @@ public class EmployerPage extends BasePage {
             }
             buttonSearchEmployers.click();
         } catch (Exception ex) {
+            log.info(ex.getMessage());
             AllureUtils.takeScreenshot(driver);
         }
     }
@@ -115,20 +124,27 @@ public class EmployerPage extends BasePage {
             employersList.setItems(employers);
             employersList.setFound(getCountEmployers());
         } catch (Exception ex) {
+            log.info(ex.getMessage());
             AllureUtils.takeScreenshot(driver);
         }
         return employersList;
     }
 
-    @Step("Receiving company id and transitiond")
-    public String getIdEmployer() {
-        WebElement selectEmployer = blockEmployers.get(2).findElement(By.tagName(EMPLOYER_NAME));
-        String urlSelectEmployer = selectEmployer.getAttribute("href");
-        String[] params = urlSelectEmployer.split("/");
-        String id = params[params.length - 1];
-        log.info(String.format("Company selection by id = '%s'", id));
-        selectEmployer.click();
-        return id;
+    @Step("Receiving company id and transition")
+    public String getIdEmployer(int index) {
+        try {
+            WebElement selectEmployer = blockEmployers.get(index).findElement(By.tagName(EMPLOYER_NAME));
+            String urlSelectEmployer = selectEmployer.getAttribute("href");
+            String[] params = urlSelectEmployer.split("/");
+            String id = params[params.length - 1];
+            log.info(String.format("Company selection by id = '%s'", id));
+            selectEmployer.click();
+            return id;
+        } catch (Exception ex) {
+            log.info(ex.getMessage());
+            AllureUtils.takeScreenshot(driver);
+        }
+        return null;
     }
 
     @Step("Getting a description of the company by id")
@@ -137,9 +153,9 @@ public class EmployerPage extends BasePage {
         Regions regions = new Regions();
         try {
             String employerName = titleEmployer.getText()
-                    .replace("ООО ", "")
-                    .replace("ОАО ", "")
-                    .replace("УП ", "");
+                    .replace(COMPANY_OOO, "")
+                    .replace(COMPANY_OAO, "")
+                    .replace(COMPANY_YP, "");
             log.info(String.format("Adding '%s' to array", employerName));
             employer.setName(employerName);
             String regionName = regionEmployer.getText();
@@ -149,14 +165,45 @@ public class EmployerPage extends BasePage {
             String countVacancies = countOpenVacancies.getText();
             log.info(String.format("Adding '%s' active vacancies", countVacancies));
             countVacancies = countVacancies
-                    .replace(EMPLOYERS_ACTIV_VACANCIES, "")
-                    .replace(EMPLOYERS_ACTIV_VACANCY, "")
+                    .replace(EMPLOYERS_ACTIVE_VACANCIES, "")
+                    .replace(EMPLOYERS_ACTIVE_VACANCY, "")
                     .replaceAll("\\s+", "");
             employer.setOpenVacancies(countVacancies);
             employer.setSiteUrl(siteEmployer.getText());
         } catch (Exception ex) {
+            log.info(ex.getMessage());
             AllureUtils.takeScreenshot(driver);
         }
         return employer;
+    }
+
+    @Step("switching language")
+    public String isSwitchLanguage() {
+        log.info("switching language");
+        try {
+            if (hrefSwitchLanguageToEn.isDisplayed()) {
+                hrefSwitchLanguageToEn.click();
+                return LANGUAGE_EN;
+            } else {
+                hrefSwitchLanguageToRu.click();
+                return LANGUAGE_RU;
+            }
+        } catch (NoSuchElementException ex) {
+            log.info(ex.getMessage());
+            AllureUtils.takeScreenshot(driver);
+            return null;
+        }
+    }
+
+    @Step("Get button name")
+    public String getNameButtonLogin() {
+        log.info("Get button name");
+        try {
+            return buttonLogin.getText();
+        } catch (NoSuchElementException ex) {
+            log.info(ex.getMessage());
+            AllureUtils.takeScreenshot(driver);
+            return null;
+        }
     }
 }

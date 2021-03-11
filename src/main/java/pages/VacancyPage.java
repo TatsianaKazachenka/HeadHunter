@@ -90,9 +90,9 @@ public class VacancyPage extends BasePage {
         return list;
     }
 
-    @Step("Receiving vacancy id and transitiond")
-    public String getIdVacancy() {
-        WebElement selectVacancy = blockVacancy.get(1).findElement(VACANCY_TITLE);
+    @Step("Receiving vacancy id and transition")
+    public String getIdVacancy(int index) {
+        WebElement selectVacancy = blockVacancy.get(index).findElement(VACANCY_TITLE);
         String urlSelectVacancy = selectVacancy.getAttribute("href");
         String[] params = urlSelectVacancy.substring(0, urlSelectVacancy.indexOf("?")).split("/");
         String id = params[params.length - 1];

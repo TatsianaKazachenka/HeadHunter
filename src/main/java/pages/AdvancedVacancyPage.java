@@ -12,6 +12,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import utils.AllureUtils;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 
 @Log4j2
 public class AdvancedVacancyPage extends BasePage {
@@ -33,11 +34,19 @@ public class AdvancedVacancyPage extends BasePage {
     @FindBy(xpath = "//*[contains(@data-qa, 'schedule-item_fullDay') and contains(@class, 'bloko-checkbox')]")
     WebElement checkboxDayFull;
     @FindBy(xpath = "//*[contains(@data-qa, 'searchperiod-item_30') and contains(@class, 'bloko-radio')]")
-    WebElement radioboxSearchperiod30;
+    WebElement radioboxSearchPeriod30;
     @FindBy(xpath = "//*[contains(@data-qa, 'items-on-page_20') and contains(@class, 'bloko-radio')]")
     WebElement radioboxItemPage20;
     @FindBy(xpath = "//*[contains(@data-qa, 'vacancysearch__submit')]")
     WebElement buttonSearchVacancy;
+    @FindBy(xpath = "//*[@data-qa = 'signup']")
+    WebElement buttonCreateResume;
+    @FindBy(xpath = "//*[@data-qa = 'login']")
+    WebElement buttonLogin;
+    @FindBy(xpath = "//*[@class='supernova-icon-link-switch']")
+    WebElement buttonSwitchSearch;
+    @FindBy(xpath = "//*[contains(@class, 'supernova-navi-search')]//*[@class='supernova-navi-search-columns']")
+    WebElement inputSwitchSearch;
 
     public static final String BUTTON_SEARCH_COUNTRY = "//*[contains(text(),'%s')]/ancestor::*[contains(@class, 'bloko-tree-selector-content')]//*[contains(@data-qa, 'bloko-tree-selector-toogle-node')]";
     public static final String ELEMENT_SEARCH_REGION = "//*[contains(text(),'%s') and contains(@data-qa,'bloko-tree-selector-item-text')]";
@@ -75,14 +84,75 @@ public class AdvancedVacancyPage extends BasePage {
             log.info("Item selection full time");
             checkboxEmploymentFull.click();
             checkboxDayFull.click();
-            scrolling(radioboxSearchperiod30);
+            scrolling(radioboxSearchPeriod30);
             log.info("Item selection per month");
-            radioboxSearchperiod30.click();
+            radioboxSearchPeriod30.click();
             log.info("Item selection 20 jobs per page");
             radioboxItemPage20.click();
             buttonSearchVacancy.click();
         } catch (Exception ex) {
+            log.info(ex.getMessage());
             AllureUtils.takeScreenshot(driver);
+        }
+    }
+
+    @Step("Get button name")
+    public String getNameButtonCreateResume() {
+        log.info("Get button name");
+        try {
+            return buttonCreateResume.getText();
+        } catch (NoSuchElementException ex) {
+            log.info(ex.getMessage());
+            AllureUtils.takeScreenshot(driver);
+            return null;
+        }
+    }
+
+    @Step("check for the presence of the login button")
+    public boolean isButtonLoginPresent() {
+        log.info("check for the presence of the login button");
+        try {
+            return isElementPresent(buttonLogin);
+        } catch (NoSuchElementException ex) {
+            log.info(ex.getMessage());
+            AllureUtils.takeScreenshot(driver);
+            return false;
+        }
+    }
+
+    @Step("check for the presence of the Create Resume button")
+    public boolean isButtonCreateResumePresent() {
+        log.info("check for the presence of the Create Resume button");
+        try {
+            return isElementPresent(buttonCreateResume);
+        } catch (NoSuchElementException ex) {
+            log.info(ex.getMessage());
+            AllureUtils.takeScreenshot(driver);
+            return false;
+        }
+    }
+
+    @Step("switch the visibility of the search bar")
+    public boolean isSwitchSearch() {
+        log.info("switch the visibility of the search bar");
+        try {
+            boolean isVisible = inputSwitchSearch.isDisplayed();
+            buttonSwitchSearch.click();
+            return isVisible != inputSwitchSearch.isDisplayed();
+        } catch (NoSuchElementException ex) {
+            log.info(ex.getMessage());
+            AllureUtils.takeScreenshot(driver);
+            return false;
+        }
+    }
+
+    public boolean isElementPresent(WebElement element) {
+        try {
+            return element.isDisplayed();
+        } catch (NoSuchElementException ex) {
+            log.info(ex.getMessage());
+            AllureUtils.takeScreenshot(driver);
+            return false;
         }
     }
 

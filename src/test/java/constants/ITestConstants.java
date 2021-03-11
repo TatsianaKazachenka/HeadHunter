@@ -14,4 +14,8 @@ public interface ITestConstants {
     String SEARCH_PAGE = "20";
     String SEARCH_TEXT_EMPLOYER = "Design";
     String SEARCH_WITH_VACANCIES = "true";
+    String BUTTON_CREATE_RESUME = "Создать резюме";
+    String BUTTON_LOGIN_RU = "Войти";
+    String BUTTON_LOGIN_EN = "Sign in";
+    String LANGUAGE_RU = "RU";
 }

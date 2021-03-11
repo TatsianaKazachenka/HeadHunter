@@ -6,7 +6,7 @@ import objects.*;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
-public class EmployerTest extends BaseTest{
+public class EmployerTest extends BaseTest {
 
     @Test
     @Description("The number of companies with open vacancies")
@@ -35,7 +35,7 @@ public class EmployerTest extends BaseTest{
     @Test
     @Description("The number open vacancies with Employer")
     public void openVacanciesTest() {
-        EmployersList listAPI = new EmployerAdapter().getCountOpenVacancies(SEARCH_TEXT_EMPLOYER, SEARCH_AREA,SEARCH_WITH_VACANCIES);
+        EmployersList listAPI = new EmployerAdapter().getCountOpenVacancies(SEARCH_TEXT_EMPLOYER, SEARCH_AREA, SEARCH_WITH_VACANCIES);
         int countEmployersAPI = listAPI.getFound();
 
         employerPage.openPage();
@@ -44,12 +44,12 @@ public class EmployerTest extends BaseTest{
         int countEmployersUI = listUI.getFound();
         Assert.assertEquals(countEmployersAPI, countEmployersUI);
 
-        for(int i = 0; i < countEmployersAPI; i++){
+        for (int i = 0; i < countEmployersAPI; i++) {
             String nameAPI = listAPI.getItems().get(i).getName();
             String countVacanciesAPI = listAPI.getItems().get(i).getOpenVacancies();
-            for (int j = 0 ; j < countEmployersUI; j++){
+            for (int j = 0; j < countEmployersUI; j++) {
                 String nameUI = listUI.getItems().get(j).getName();
-                if(nameAPI.equals(nameUI)){
+                if (nameAPI.equals(nameUI)) {
                     String countVacanciesUI = listUI.getItems().get(j).getOpenVacancies();
                     Assert.assertEquals(countVacanciesAPI, countVacanciesUI);
                 }
@@ -59,10 +59,11 @@ public class EmployerTest extends BaseTest{
 
     @Test
     @Description("Checking Employer")
-    public void employerTest(){
-        employerPage.openPage();;
+    public void employerTest() {
+        employerPage.openPage();
+        ;
         employerPage.advancedSearchEmployers(SEARCH_COUNTRY, SEARCH_REGION, SEARCH_TEXT_EMPLOYER, false);
-        String id = employerPage.getIdEmployer();
+        String id = employerPage.getIdEmployer(0);
 
         Employer listAPI = new EmployerAdapter().getEmployer(id);
         Employer listUI = employerPage.fullingEmployer();
@@ -71,5 +72,14 @@ public class EmployerTest extends BaseTest{
         Assert.assertEquals(listAPI.getArea().getName(), listUI.getArea().getName());
         Assert.assertEquals(listAPI.getOpenVacancies(), listUI.getOpenVacancies());
         Assert.assertEquals(listAPI.getSiteUrl().replace("https://", "").replace("http://", ""), listUI.getSiteUrl().replace("https://", "").replace("http://", ""));
+    }
+
+    @Test
+    @Description("checking language switching on the site")
+    public void switchingLanguageTest() {
+        employerPage.openPage();
+        String language = employerPage.isSwitchLanguage();
+        String languageButtonLogin = LANGUAGE_RU == language ? BUTTON_LOGIN_RU : BUTTON_LOGIN_EN;
+        Assert.assertEquals(languageButtonLogin, employerPage.getNameButtonLogin());
     }
 }
