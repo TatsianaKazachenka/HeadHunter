@@ -8,21 +8,23 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
-import pages.LoginPage;
+import pages.*;
 
 import java.util.concurrent.TimeUnit;
 
 public class BaseTest implements ITestConstants {
     WebDriver driver;
 
-    LoginPage loginPage;
+    VacancyPage vacancyPage;
+    AdvancedVacancyPage advancedVacancyPage;
+    EmployerPage employerPage;
 
     @BeforeMethod
     public void initTest() {
         WebDriverManager.chromedriver().setup();
         ChromeOptions options = new ChromeOptions();
         options.addArguments("-incognito");
-        options.addArguments("headless");
+        //options.addArguments("headless");
         driver = new ChromeDriver(options);
         driver.manage().window().maximize();
         driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
@@ -35,6 +37,8 @@ public class BaseTest implements ITestConstants {
     }
 
     private void initPages() {
-        loginPage = new LoginPage(driver);
+        vacancyPage = new VacancyPage(driver);
+        advancedVacancyPage = new AdvancedVacancyPage(driver);
+        employerPage = new EmployerPage(driver);
     }
 }
