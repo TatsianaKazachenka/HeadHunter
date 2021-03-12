@@ -86,7 +86,7 @@ public class AdvancedVacancyPage extends BasePage {
             log.info("Item selection full time");
             checkboxEmploymentFull.click();
             checkboxDayFull.click();
-            scrollToElement(driver, radioboxSearchperiod30);
+            scrollToElement(driver, radioboxSearchPeriod30);
             log.info("Item selection per month");
             radioboxSearchPeriod30.click();
             log.info("Item selection 20 jobs per page");
