@@ -6,7 +6,7 @@ import objects.*;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
-public class VacancyTest extends BaseTest{
+public class VacancyTest extends BaseTest {
 
     @Test
     @Description("check the number of vacancies found")
@@ -31,22 +31,22 @@ public class VacancyTest extends BaseTest{
         VacanciesList listUI = vacancyPage.fullingVacancyList();
 
         Assert.assertEquals(listAPI.getFound(), listUI.getFound());
-        for (int i = 0; i < listAPI.getFound(); i++){
+        for (int i = 0; i < listAPI.getFound(); i++) {
             String nameAPI = listAPI.getItems().get(i).getName();
             String employerAPI = listAPI.getItems().get(i).getEmployer().getName();
-            for (int j = 0 ; j < listUI.getFound(); j++){
+            for (int j = 0; j < listUI.getFound(); j++) {
                 String nameUI = listUI.getItems().get(j).getName();
                 String employerUI = listAPI.getItems().get(j).getEmployer().getName();
-                 if(nameAPI.equals(nameUI)){
-                     Assert.assertEquals(employerAPI, employerUI);
-                 }
+                if (nameAPI.equals(nameUI)) {
+                    Assert.assertEquals(employerAPI, employerUI);
+                }
             }
         }
     }
 
     @Test
     @Description("checking one vacancy")
-    public void vacancyTest(){
+    public void vacancyTest() {
         vacancyPage.openPage();
         vacancyPage.search(SEARCH_TEXT);
         String id = vacancyPage.getIdVacancy();
@@ -61,11 +61,11 @@ public class VacancyTest extends BaseTest{
 
         boolean isSkills = false;
 
-        for (int i = 0; i < listAPI.getSkills().size(); i++){
+        for (int i = 0; i < listAPI.getSkills().size(); i++) {
             String nameAPI = listAPI.getSkills().get(i).getName();
-            for (int j = 0 ; j < listUI.getSkills().size(); j++){
+            for (int j = 0; j < listUI.getSkills().size(); j++) {
                 String nameUI = listUI.getSkills().get(j).getName();
-                if(nameAPI.equals(nameUI)){
+                if (nameAPI.equals(nameUI)) {
                     isSkills = true;
                 }
             }

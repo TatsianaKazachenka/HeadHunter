@@ -6,7 +6,9 @@ import objects.*;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
-public class EmployerTest extends BaseTest{
+import static utils.Utils.getFormattedUrl;
+
+public class EmployerTest extends BaseTest {
 
     @Test
     @Description("The number of companies with open vacancies")
@@ -16,6 +18,7 @@ public class EmployerTest extends BaseTest{
 
         employerPage.openPage();
         employerPage.searchOnlyWithCloseVacancies();
+
         int countEmployersUI = employerPage.getCountEmployers();
         Assert.assertEquals(countEmployersAPI, countEmployersUI);
     }
@@ -28,6 +31,7 @@ public class EmployerTest extends BaseTest{
 
         employerPage.openPage();
         employerPage.advancedSearchEmployers(SEARCH_COUNTRY, SEARCH_REGION, "", true);
+
         int countEmployersUI = employerPage.getCountEmployers();
         Assert.assertEquals(countEmployersAPI, countEmployersUI);
     }
@@ -35,32 +39,22 @@ public class EmployerTest extends BaseTest{
     @Test
     @Description("The number open vacancies with Employer")
     public void openVacanciesTest() {
-        EmployersList listAPI = new EmployerAdapter().getCountOpenVacancies(SEARCH_TEXT_EMPLOYER, SEARCH_AREA,SEARCH_WITH_VACANCIES);
+        EmployersList listAPI = new EmployerAdapter().getCountOpenVacancies(SEARCH_TEXT_EMPLOYER, SEARCH_AREA, SEARCH_WITH_VACANCIES);
         int countEmployersAPI = listAPI.getFound();
 
         employerPage.openPage();
         employerPage.advancedSearchEmployers(SEARCH_COUNTRY, SEARCH_REGION, SEARCH_TEXT_EMPLOYER, false);
         EmployersList listUI = employerPage.getListEmployers();
         int countEmployersUI = listUI.getFound();
-        Assert.assertEquals(countEmployersAPI, countEmployersUI);
 
-        for(int i = 0; i < countEmployersAPI; i++){
-            String nameAPI = listAPI.getItems().get(i).getName();
-            String countVacanciesAPI = listAPI.getItems().get(i).getOpenVacancies();
-            for (int j = 0 ; j < countEmployersUI; j++){
-                String nameUI = listUI.getItems().get(j).getName();
-                if(nameAPI.equals(nameUI)){
-                    String countVacanciesUI = listUI.getItems().get(j).getOpenVacancies();
-                    Assert.assertEquals(countVacanciesAPI, countVacanciesUI);
-                }
-            }
-        }
+        Assert.assertEquals(countEmployersAPI, countEmployersUI);
+        Assert.assertTrue(employerPage.comparisonOfNameAndQuantity(listAPI, listUI));
     }
 
     @Test
     @Description("Checking Employer")
-    public void employerTest(){
-        employerPage.openPage();;
+    public void employerTest() {
+        employerPage.openPage();
         employerPage.advancedSearchEmployers(SEARCH_COUNTRY, SEARCH_REGION, SEARCH_TEXT_EMPLOYER, false);
         String id = employerPage.getIdEmployer();
 
@@ -70,6 +64,6 @@ public class EmployerTest extends BaseTest{
         Assert.assertEquals(listAPI.getName(), listUI.getName());
         Assert.assertEquals(listAPI.getArea().getName(), listUI.getArea().getName());
         Assert.assertEquals(listAPI.getOpenVacancies(), listUI.getOpenVacancies());
-        Assert.assertEquals(listAPI.getSiteUrl().replace("https://", "").replace("http://", ""), listUI.getSiteUrl().replace("https://", "").replace("http://", ""));
+        Assert.assertEquals(getFormattedUrl(listAPI.getSiteUrl()), getFormattedUrl(listUI.getSiteUrl()));
     }
 }

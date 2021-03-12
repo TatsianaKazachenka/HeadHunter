@@ -13,6 +13,8 @@ import utils.AllureUtils;
 
 import java.util.List;
 
+import static utils.JavaScriptUtils.scrollToElement;
+
 @Log4j2
 public class AdvancedVacancyPage extends BasePage {
 
@@ -56,13 +58,13 @@ public class AdvancedVacancyPage extends BasePage {
         log.info(String.format("Entering the phrase '%s' to search", textSearch));
         try {
             inputSearch.sendKeys(textSearch);
-            scrolling(buttonSearchRegion);
+            scrollToElement(driver, buttonSearchRegion);
             for (WebElement item : selectedRegions) {
                 item.click();
             }
             buttonSearchRegion.click();
             WebDriverWait wait = new WebDriverWait(driver, 50);
-            log.info(String.format("Waiting for a window to appear"));
+            log.info("Waiting for a window to appear");
             wait.until(ExpectedConditions.visibilityOf(modalRegion));
             log.info(String.format("Country selection '%s'", country));
             driver.findElement(By.xpath(String.format(BUTTON_SEARCH_COUNTRY, country))).click();
@@ -71,11 +73,11 @@ public class AdvancedVacancyPage extends BasePage {
             buttonSelectRegion.click();
             log.info("Item selection no experience");
             radioboxNoExperience.click();
-            scrolling(checkboxEmploymentFull);
+            scrollToElement(driver, checkboxEmploymentFull);
             log.info("Item selection full time");
             checkboxEmploymentFull.click();
             checkboxDayFull.click();
-            scrolling(radioboxSearchperiod30);
+            scrollToElement(driver, radioboxSearchperiod30);
             log.info("Item selection per month");
             radioboxSearchperiod30.click();
             log.info("Item selection 20 jobs per page");
@@ -84,11 +86,5 @@ public class AdvancedVacancyPage extends BasePage {
         } catch (Exception ex) {
             AllureUtils.takeScreenshot(driver);
         }
-    }
-
-    public void scrolling(WebElement element) throws InterruptedException {
-        log.info(String.format("Scrolling by element"));
-        ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", element);
-        Thread.sleep(500);
     }
 }

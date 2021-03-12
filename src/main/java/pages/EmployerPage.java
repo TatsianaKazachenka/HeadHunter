@@ -120,7 +120,7 @@ public class EmployerPage extends BasePage {
         return employersList;
     }
 
-    @Step("Receiving company id and transitiond")
+    @Step("Receiving company id and transition")
     public String getIdEmployer() {
         WebElement selectEmployer = blockEmployers.get(2).findElement(By.tagName(EMPLOYER_NAME));
         String urlSelectEmployer = selectEmployer.getAttribute("href");
@@ -149,8 +149,8 @@ public class EmployerPage extends BasePage {
             String countVacancies = countOpenVacancies.getText();
             log.info(String.format("Adding '%s' active vacancies", countVacancies));
             countVacancies = countVacancies
-                    .replace(EMPLOYERS_ACTIV_VACANCIES, "")
-                    .replace(EMPLOYERS_ACTIV_VACANCY, "")
+                    .replace(EMPLOYERS_ACTIVE_VACANCIES, "")
+                    .replace(EMPLOYERS_ACTIVE_VACANCY, "")
                     .replaceAll("\\s+", "");
             employer.setOpenVacancies(countVacancies);
             employer.setSiteUrl(siteEmployer.getText());
@@ -158,5 +158,26 @@ public class EmployerPage extends BasePage {
             AllureUtils.takeScreenshot(driver);
         }
         return employer;
+    }
+
+    @Step("Comparison value of a pair of values name employer and number of vacancies")
+    public boolean comparisonOfNameAndQuantity(EmployersList listAPI, EmployersList listUI){
+        boolean isEquals = false;
+        for (int i = 0; i < listAPI.getFound(); i++) {
+            String nameAPI = listAPI.getItems().get(i).getName();
+            String countVacanciesAPI = listAPI.getItems().get(i).getOpenVacancies();
+            for (int j = 0; j < listUI.getFound(); j++) {
+                String nameUI = listUI.getItems().get(j).getName();
+                if (nameAPI.equals(nameUI)) {
+                    String countVacanciesUI = listUI.getItems().get(j).getOpenVacancies();
+                    isEquals = countVacanciesUI.equals(countVacanciesAPI);
+                    if(!isEquals) {
+                        log.info(String.format("mismatch between the values of a pair of parameters and the name UI - '%s', API - '%s' and the number UI - '%s', API - '%s'", nameUI, nameAPI, countVacanciesUI, countVacanciesAPI));
+                        break;
+                    }
+                }
+            }
+        }
+        return isEquals;
     }
 }
