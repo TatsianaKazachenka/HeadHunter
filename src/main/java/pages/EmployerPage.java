@@ -207,4 +207,25 @@ public class EmployerPage extends BasePage {
             return null;
         }
     }
+
+    @Step("Comparison value of a pair of values name employer and number of vacancies")
+    public boolean comparisonOfNameAndQuantity(EmployersList listAPI, EmployersList listUI){
+        boolean isEquals = false;
+        for (int i = 0; i < listAPI.getFound(); i++) {
+            String nameAPI = listAPI.getItems().get(i).getName();
+            String countVacanciesAPI = listAPI.getItems().get(i).getOpenVacancies();
+            for (int j = 0; j < listUI.getFound(); j++) {
+                String nameUI = listUI.getItems().get(j).getName();
+                if (nameAPI.equals(nameUI)) {
+                    String countVacanciesUI = listUI.getItems().get(j).getOpenVacancies();
+                    isEquals = countVacanciesUI.equals(countVacanciesAPI);
+                    if(!isEquals) {
+                        log.info(String.format("mismatch between the values of a pair of parameters and the name UI - '%s', API - '%s' and the number UI - '%s', API - '%s'", nameUI, nameAPI, countVacanciesUI, countVacanciesAPI));
+                        break;
+                    }
+                }
+            }
+        }
+        return isEquals;
+    }
 }
