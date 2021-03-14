@@ -21,7 +21,7 @@ public class AdvancedVacancyPage extends BasePage {
 
     @FindBy(xpath = "//*[@data-qa='vacancysearch__keywords-input']")
     WebElement inputSearch;
-    @FindBy(xpath = "//*[@class='search-form']//*[@class='bloko-form-spacer']")
+    @FindBy(xpath = "//button[contains(@data-qa, 'resumes-search-region')]")
     WebElement buttonSearchRegion;
     @FindBy(xpath = "//*[contains(@data-qa, 'bloko-tag__cross')]")
     List<WebElement> selectedRegions;

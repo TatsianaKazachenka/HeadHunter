@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="UI Test suite" thread-count="2" parallel="tests">
+    <test name="UI_Test">
+        <groups>
+            <run>
+                <include name = "UI Test"/>
+            </run>
+        </groups>
+        <classes>
+            <class name="tests.EmployerTest"/>
+            <class name="tests.VacancyTest"/>
+        </classes>
+    </test>
+</suite>

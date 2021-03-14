@@ -10,7 +10,7 @@ import static utils.Utils.getFormattedUrl;
 
 public class EmployerTest extends BaseTest {
 
-    @Test
+    @Test(groups = { "search" })
     @Description("Search by text number of companies that have no open vacancies")
     public void countEmployersWithoutOpenVacanciesTest() {
         EmployersList list = new EmployerAdapter().getCountEmployersListWithoutOpenVacancies(SEARCH_TEXT_EMPLOYER);
@@ -22,7 +22,7 @@ public class EmployerTest extends BaseTest {
         Assert.assertEquals(countEmployersAPI, countEmployersUI);
     }
 
-    @Test
+    @Test(groups = { "search" })
     @Description("The number of companies after search")
     public void countEmployersAdvancedSearchTest() {
         EmployersList list = new EmployerAdapter().getCountEmployersAdvancedSearch(SEARCH_AREA);
@@ -66,7 +66,7 @@ public class EmployerTest extends BaseTest {
         Assert.assertEquals(getFormattedUrl(listAPI.getSiteUrl()), getFormattedUrl(listUI.getSiteUrl()));
     }
 
-    @Test
+    @Test(groups = { "UI Test" })
     @Description("checking language switching on the site")
     public void switchingLanguageTest() {
         employerPage.openPage();

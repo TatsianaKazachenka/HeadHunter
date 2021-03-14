@@ -8,7 +8,7 @@ import org.testng.annotations.Test;
 
 public class VacancyTest extends BaseTest {
 
-    @Test
+    @Test(groups = { "search" })
     @Description("check the number of vacancies found")
     public void countVacanciesFoundTest() {
         VacanciesList list = new VacancyAdapter().getVacanciesListForTextSearch(SEARCH_TEXT);
@@ -20,7 +20,7 @@ public class VacancyTest extends BaseTest {
         Assert.assertEquals(countVacanciesAPI, countVacanciesUI);
     }
 
-    @Test
+    @Test(groups = { "search" })
     @Description("check advanced search")
     public void advancedVacancyTest() throws InterruptedException {
         VacanciesList listAPI = new VacancyAdapter().getAdvancedVacanciesListSearch(SEARCH_TEXT, SEARCH_AREA, SEARCH_CURRENCY_CODE_RUR,
@@ -31,25 +31,15 @@ public class VacancyTest extends BaseTest {
         VacanciesList listUI = vacancyPage.fullingVacancyList();
 
         Assert.assertEquals(listAPI.getFound(), listUI.getFound());
-        for (int i = 0; i < listAPI.getFound(); i++) {
-            String nameAPI = listAPI.getItems().get(i).getName();
-            String employerAPI = listAPI.getItems().get(i).getEmployer().getName();
-            for (int j = 0; j < listUI.getFound(); j++) {
-                String nameUI = listUI.getItems().get(j).getName();
-                String employerUI = listAPI.getItems().get(j).getEmployer().getName();
-                if (nameAPI.equals(nameUI)) {
-                    Assert.assertEquals(employerAPI, employerUI);
-                }
-            }
-        }
+        Assert.assertTrue(vacancyPage.comparisonOfNameVacancyAndNameEmployer(listAPI, listUI));
     }
 
     @Test
     @Description("checking one vacancy")
-    public void vacancyTest() {
+    public void vacancyTest() throws InterruptedException{
         vacancyPage.openPage();
         vacancyPage.search(SEARCH_TEXT);
-        String id = vacancyPage.getIdVacancy(1);
+        String id = vacancyPage.getIdVacancy(2);
 
         Vacancy listAPI = new VacancyAdapter().getVacancy(id);
         Vacancy listUI = vacancyPage.fullingVacancy();
@@ -73,14 +63,14 @@ public class VacancyTest extends BaseTest {
         Assert.assertTrue(isSkills);
     }
 
-    @Test
+    @Test(groups = { "UI Test" })
     @Description("check button title create resume")
     public void buttonTitleCreateResumeTest() {
         advancedVacancyPage.openPage();
         Assert.assertEquals(advancedVacancyPage.getNameButtonCreateResume(), BUTTON_CREATE_RESUME);
     }
 
-    @Test
+    @Test(groups = { "UI Test" })
     @Description("check for the presence of login buttons and create a resume")
     public void buttonsLoginAndCreateResumePresentTest() {
         advancedVacancyPage.openPage();
@@ -88,7 +78,7 @@ public class VacancyTest extends BaseTest {
         Assert.assertTrue(advancedVacancyPage.isButtonCreateResumePresent());
     }
 
-    @Test
+    @Test(groups = { "UI Test" })
     @Description("checking toggle the visibility of the search bar")
     public void isSwitchSearchTest() {
         advancedVacancyPage.openPage();

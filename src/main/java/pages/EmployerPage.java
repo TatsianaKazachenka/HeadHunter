@@ -208,16 +208,21 @@ public class EmployerPage extends BasePage {
         }
     }
 
-    @Step("Comparison value of a pair of values name employer and number of vacancies")
+    @Step("Comparison value of a pair of values name employer and number of open vacancies")
     public boolean comparisonOfNameAndQuantity(EmployersList listAPI, EmployersList listUI){
+        log.info("Comparison value of a pair of values name employer and number of open vacancies");
         boolean isEquals = false;
         for (int i = 0; i < listAPI.getFound(); i++) {
             String nameAPI = listAPI.getItems().get(i).getName();
+            log.info(String.format("Name API '%s'", nameAPI));
             String countVacanciesAPI = listAPI.getItems().get(i).getOpenVacancies();
+            log.info(String.format("Count Vacancies API '%s'", countVacanciesAPI));
             for (int j = 0; j < listUI.getFound(); j++) {
                 String nameUI = listUI.getItems().get(j).getName();
+                log.info(String.format("Name UI '%s'", nameUI));
                 if (nameAPI.equals(nameUI)) {
                     String countVacanciesUI = listUI.getItems().get(j).getOpenVacancies();
+                    log.info(String.format("Count Vacancies API '%s'", countVacanciesUI));
                     isEquals = countVacanciesUI.equals(countVacanciesAPI);
                     if(!isEquals) {
                         log.info(String.format("mismatch between the values of a pair of parameters and the name UI - '%s', API - '%s' and the number UI - '%s', API - '%s'", nameUI, nameAPI, countVacanciesUI, countVacanciesAPI));
