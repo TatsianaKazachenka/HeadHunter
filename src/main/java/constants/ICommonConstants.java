@@ -13,7 +13,7 @@ public interface ICommonConstants {
     String VACANCIES_API_URL = "vacancies";
     String EMPLOYERS_API_URL = "employers";
 
-    String HEADER = "[a-zA-Zа-яА-Я«»]";
+    String HEADER_PATTERN = "[a-zA-Zа-яА-Я«»]";
     String EMPLOYERS_ACTIVE_VACANCIES = " активные вакансии";
     String EMPLOYERS_ACTIVE_VACANCY = " активная вакансия";
     String LANGUAGE_RU = "RU";

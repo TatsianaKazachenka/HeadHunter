@@ -55,7 +55,7 @@ public class EmployerTest extends BaseTest {
     public void employerTest() {
         employerPage.openPage();
         employerPage.advancedSearchEmployers(SEARCH_COUNTRY, SEARCH_REGION, SEARCH_TEXT_EMPLOYER, false);
-        String id = employerPage.getIdEmployer(0);
+        String id = employerPage.getEmployerIdByIndex(0);
 
         Employer listAPI = new EmployerAdapter().getEmployer(id);
         Employer listUI = employerPage.fullingEmployer();
@@ -70,7 +70,7 @@ public class EmployerTest extends BaseTest {
     @Description("checking language switching on the site")
     public void switchingLanguageTest() {
         employerPage.openPage();
-        String language = employerPage.isSwitchLanguage();
+        String language = employerPage.switchLanguage();
         String languageButtonLogin = LANGUAGE_RU == language ? BUTTON_LOGIN_RU : BUTTON_LOGIN_EN;
         Assert.assertEquals(languageButtonLogin, employerPage.getNameButtonLogin());
     }

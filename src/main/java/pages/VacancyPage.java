@@ -59,7 +59,7 @@ public class VacancyPage extends BasePage {
     public int getCountFoundVacancy(String search) {
         log.info("Getting the number of vacancies");
         String headerText = headerTextVacancy.getText();
-        headerText = headerText.replaceAll(HEADER, "")
+        headerText = headerText.replaceAll(HEADER_PATTERN, "")
                 .replaceAll("\\s+", "");
         return Integer.parseInt(headerText);
     }
@@ -91,7 +91,7 @@ public class VacancyPage extends BasePage {
     }
 
     @Step("Receiving vacancy id and transition")
-    public String getIdVacancy(int index) {
+    public String getVacancyIdByIndex(int index) {
         WebElement selectVacancy = blockVacancy.get(index).findElement(VACANCY_TITLE);
         String urlSelectVacancy = selectVacancy.getAttribute("href");
         String[] params = urlSelectVacancy.substring(0, urlSelectVacancy.indexOf("?")).split("/");
