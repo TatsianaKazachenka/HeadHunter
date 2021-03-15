@@ -77,7 +77,7 @@ public class EmployerPage extends BasePage {
             checkboxWithCloseVacancies.click();
             buttonSearchEmployers.click();
         } catch (Exception ex) {
-            log.info(ex.getMessage());
+            log.error(ex.getMessage());
             AllureUtils.takeScreenshot(driver);
         }
     }
@@ -102,7 +102,7 @@ public class EmployerPage extends BasePage {
             }
             buttonSearchEmployers.click();
         } catch (Exception ex) {
-            log.info(ex.getMessage());
+            log.error(ex.getMessage());
             AllureUtils.takeScreenshot(driver);
         }
     }
@@ -125,14 +125,14 @@ public class EmployerPage extends BasePage {
             employersList.setItems(employers);
             employersList.setFound(getCountEmployers());
         } catch (Exception ex) {
-            log.info(ex.getMessage());
+            log.error(ex.getMessage());
             AllureUtils.takeScreenshot(driver);
         }
         return employersList;
     }
 
     @Step("Receiving company id and transition")
-    public String getIdEmployer(int index) {
+    public String getEmployerIdByIndex(int index) {
         try {
             WebElement selectEmployer = blockEmployers.get(index).findElement(By.tagName(EMPLOYER_NAME));
             String urlSelectEmployer = selectEmployer.getAttribute("href");
@@ -142,7 +142,7 @@ public class EmployerPage extends BasePage {
             selectEmployer.click();
             return id;
         } catch (Exception ex) {
-            log.info(ex.getMessage());
+            log.error(ex.getMessage());
             AllureUtils.takeScreenshot(driver);
         }
         return null;
@@ -172,14 +172,14 @@ public class EmployerPage extends BasePage {
             employer.setOpenVacancies(countVacancies);
             employer.setSiteUrl(siteEmployer.getText());
         } catch (Exception ex) {
-            log.info(ex.getMessage());
+            log.error(ex.getMessage());
             AllureUtils.takeScreenshot(driver);
         }
         return employer;
     }
 
     @Step("switching language")
-    public String isSwitchLanguage() {
+    public String switchLanguage() {
         log.info("switching language");
         try {
             if (hrefSwitchLanguageToEn.isDisplayed()) {
@@ -190,7 +190,7 @@ public class EmployerPage extends BasePage {
                 return LANGUAGE_RU;
             }
         } catch (NoSuchElementException ex) {
-            log.info(ex.getMessage());
+            log.error(ex.getMessage());
             AllureUtils.takeScreenshot(driver);
             return null;
         }
@@ -202,7 +202,7 @@ public class EmployerPage extends BasePage {
         try {
             return buttonLogin.getText();
         } catch (NoSuchElementException ex) {
-            log.info(ex.getMessage());
+            log.error(ex.getMessage());
             AllureUtils.takeScreenshot(driver);
             return null;
         }

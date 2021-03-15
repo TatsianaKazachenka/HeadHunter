@@ -22,13 +22,6 @@ jobs:
             - ~/.m2
           key: v1-dependencies-{{ checksum "pom.xml" }}
 
-      # run tests!
-      - run:
-          name: Get chrome version
-          command: google-chrome --version
-      #      - run:
-      #          name: Setting chmod for Chrome
-      #          command: chmod 777 src/test/resources/webdrivers/linux/chromedriver
       - run:
           name: Running tests
           command: mvn clean install

@@ -93,18 +93,18 @@ public class AdvancedVacancyPage extends BasePage {
             radioboxItemPage20.click();
             buttonSearchVacancy.click();
         } catch (Exception ex) {
-            log.info(ex.getMessage());
+            log.error(ex.getMessage());
             AllureUtils.takeScreenshot(driver);
         }
     }
 
     @Step("Get button name")
-    public String getNameButtonCreateResume() {
+    public String getCreateResumeButtonName() {
         log.info("Get button name");
         try {
             return buttonCreateResume.getText();
         } catch (NoSuchElementException ex) {
-            log.info(ex.getMessage());
+            log.error(ex.getMessage());
             AllureUtils.takeScreenshot(driver);
             return null;
         }
@@ -116,7 +116,7 @@ public class AdvancedVacancyPage extends BasePage {
         try {
             return isElementPresent(buttonLogin);
         } catch (NoSuchElementException ex) {
-            log.info(ex.getMessage());
+            log.error(ex.getMessage());
             AllureUtils.takeScreenshot(driver);
             return false;
         }
@@ -128,21 +128,21 @@ public class AdvancedVacancyPage extends BasePage {
         try {
             return isElementPresent(buttonCreateResume);
         } catch (NoSuchElementException ex) {
-            log.info(ex.getMessage());
+            log.error(ex.getMessage());
             AllureUtils.takeScreenshot(driver);
             return false;
         }
     }
 
     @Step("switch the visibility of the search bar")
-    public boolean isSwitchSearch() {
+    public boolean isSwitchSearchDisplayed() {
         log.info("switch the visibility of the search bar");
         try {
             boolean isVisible = inputSwitchSearch.isDisplayed();
             buttonSwitchSearch.click();
             return isVisible != inputSwitchSearch.isDisplayed();
         } catch (NoSuchElementException ex) {
-            log.info(ex.getMessage());
+            log.error(ex.getMessage());
             AllureUtils.takeScreenshot(driver);
             return false;
         }
@@ -152,7 +152,7 @@ public class AdvancedVacancyPage extends BasePage {
         try {
             return element.isDisplayed();
         } catch (NoSuchElementException ex) {
-            log.info(ex.getMessage());
+            log.error(ex.getMessage());
             AllureUtils.takeScreenshot(driver);
             return false;
         }

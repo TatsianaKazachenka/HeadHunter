@@ -39,7 +39,8 @@ public class VacancyTest extends BaseTest {
     public void vacancyTest() throws InterruptedException{
         vacancyPage.openPage();
         vacancyPage.search(SEARCH_TEXT);
-        String id = vacancyPage.getIdVacancy(2);
+      
+        String id = vacancyPage.getVacancyIdByIndex(2);
 
         Vacancy listAPI = new VacancyAdapter().getVacancy(id);
         Vacancy listUI = vacancyPage.fullingVacancy();
@@ -67,7 +68,7 @@ public class VacancyTest extends BaseTest {
     @Description("check button title create resume")
     public void buttonTitleCreateResumeTest() {
         advancedVacancyPage.openPage();
-        Assert.assertEquals(advancedVacancyPage.getNameButtonCreateResume(), BUTTON_CREATE_RESUME);
+        Assert.assertEquals(advancedVacancyPage.getCreateResumeButtonName(), BUTTON_CREATE_RESUME);
     }
 
     @Test(groups = { "UI Test" })
@@ -82,6 +83,6 @@ public class VacancyTest extends BaseTest {
     @Description("checking toggle the visibility of the search bar")
     public void isSwitchSearchTest() {
         advancedVacancyPage.openPage();
-        Assert.assertTrue(advancedVacancyPage.isSwitchSearch());
+        Assert.assertTrue(advancedVacancyPage.isSwitchSearchDisplayed());
     }
 }

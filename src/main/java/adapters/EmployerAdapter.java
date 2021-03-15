@@ -17,7 +17,7 @@ public class EmployerAdapter extends BaseAdapter {
     }
 
     public EmployersList getCountEmployersListWithoutOpenVacancies(String search) {
-        Map<String, String> params = new HashMap<String, String>();
+        Map<String, String> params = new HashMap<>();
         params.put("text", search);
         return getWithParams(params);
     }
