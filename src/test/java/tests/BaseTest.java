@@ -19,7 +19,7 @@ public class BaseTest implements ITestConstants {
     AdvancedVacancyPage advancedVacancyPage;
     EmployerPage employerPage;
 
-    @BeforeMethod
+    @BeforeMethod(groups = { "init" } )
     public void initTest() {
         WebDriverManager.chromedriver().setup();
         ChromeOptions options = new ChromeOptions();

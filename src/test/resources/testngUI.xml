@@ -4,6 +4,7 @@
     <test name="UI_Test">
         <groups>
             <run>
+                <include name = "init"/>
                 <include name = "UI Test"/>
             </run>
         </groups>

@@ -4,7 +4,8 @@
     <test name="search" >
         <groups>
             <run>
-                <include name = ".*search*."/>
+                <include name = "init"/>
+                <include name = "search"/>
             </run>
         </groups>
         <classes>
