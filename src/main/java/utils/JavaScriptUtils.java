@@ -8,6 +8,9 @@ import org.openqa.selenium.WebElement;
 @Log4j2
 public class JavaScriptUtils {
 
+    private JavaScriptUtils() {
+    }
+
     public static void scrollToElement(WebDriver driver, WebElement element) throws InterruptedException {
         log.info("Scrolling by element");
         ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", element);
