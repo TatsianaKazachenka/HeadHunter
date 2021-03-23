@@ -59,7 +59,7 @@ public class VacancyPage extends BasePage {
     }
 
     @Step("Getting the number of vacancies after searching")
-    public int getCountFoundVacancy(String search) {
+    public int getCountFoundVacancy() {
         log.info("Getting the number of vacancies");
         String headerText = headerTextVacancy.getText();
         headerText = headerText.replaceAll(HEADER_PATTERN, "")

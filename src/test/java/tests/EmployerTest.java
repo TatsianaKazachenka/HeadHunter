@@ -15,7 +15,6 @@ public class EmployerTest extends BaseTest {
     public void countEmployersWithoutOpenVacanciesTest() {
         EmployersList list = new EmployerAdapter().getCountEmployersListWithoutOpenVacancies(SEARCH_TEXT_EMPLOYER);
         int countEmployersAPI = list.getFound();
-
         employerPage.openPage();
         employerPage.searchEmployersWithoutOpenVacancies(SEARCH_TEXT_EMPLOYER);
         int countEmployersUI = employerPage.getCountEmployers();
@@ -27,10 +26,8 @@ public class EmployerTest extends BaseTest {
     public void countEmployersAdvancedSearchTest() {
         EmployersList list = new EmployerAdapter().getCountEmployersAdvancedSearch(SEARCH_AREA);
         int countEmployersAPI = list.getFound();
-
         employerPage.openPage();
         employerPage.advancedSearchEmployers(SEARCH_COUNTRY, SEARCH_REGION, "", true);
-
         int countEmployersUI = employerPage.getCountEmployers();
         Assert.assertEquals(countEmployersAPI, countEmployersUI);
     }
@@ -40,12 +37,10 @@ public class EmployerTest extends BaseTest {
     public void openVacanciesTest() {
         EmployersList listAPI = new EmployerAdapter().getCountOpenVacancies(SEARCH_TEXT_EMPLOYER, SEARCH_AREA, SEARCH_WITH_VACANCIES);
         int countEmployersAPI = listAPI.getFound();
-
         employerPage.openPage();
         employerPage.advancedSearchEmployers(SEARCH_COUNTRY, SEARCH_REGION, SEARCH_TEXT_EMPLOYER, false);
         EmployersList listUI = employerPage.getListEmployers();
         int countEmployersUI = listUI.getFound();
-
         Assert.assertEquals(countEmployersAPI, countEmployersUI);
         Assert.assertTrue(employerPage.comparisonOfNameAndQuantity(listAPI, listUI));
     }
@@ -56,10 +51,8 @@ public class EmployerTest extends BaseTest {
         employerPage.openPage();
         employerPage.advancedSearchEmployers(SEARCH_COUNTRY, SEARCH_REGION, SEARCH_TEXT_EMPLOYER, false);
         String id = employerPage.getEmployerIdByIndex(0);
-
         Employer listAPI = new EmployerAdapter().getEmployer(id);
         Employer listUI = employerPage.fullingEmployer();
-
         Assert.assertEquals(listAPI.getName(), listUI.getName());
         Assert.assertEquals(listAPI.getArea().getName(), listUI.getArea().getName());
         Assert.assertEquals(listAPI.getOpenVacancies(), listUI.getOpenVacancies());

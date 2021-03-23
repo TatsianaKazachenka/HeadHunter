@@ -1,7 +1,7 @@
 package constants;
 
 public interface ITestConstants {
-    String SEARCH_TEXT = "QC Engineer";
+    String SEARCH_TEXT = "QA Engineer";
     String SEARCH_COUNTRY = "Беларусь";
     String SEARCH_REGION = "Брест";
     String SEARCH_AREA = "1007"; //1007 = Брест

@@ -30,12 +30,12 @@ public class BaseTest implements ITestConstants {
         driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
         initPages();
     }
-
+/*
     @AfterMethod(alwaysRun = true)
     public void endTest() {
         driver.quit();
     }
-
+*/
     private void initPages() {
         vacancyPage = new VacancyPage(driver);
         advancedVacancyPage = new AdvancedVacancyPage(driver);
